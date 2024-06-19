@@ -1,42 +1,32 @@
-const displayElement = document.getElementById('display');
+function calc() {
+    let number01 = parseFloat(document.getElementById("number01").value);
+    let number02 = parseFloat(document.getElementById("number02").value);
+    let op = document.getElementById("op").value;
+    let display = document.getElementById("display");
 
-function clearDisplay() {
-    displayElement.innerText = '0';
-}
-
-function deleteLast() {
-    if (displayElement.innerText.length === 1) {
-        displayElement.innerText = '0';
-    } else {
-        displayElement.innerText = displayElement.innerText.slice(0, -1);
+    if (isNaN(number01) || isNaN(number02)) {
+        display.innerHTML = "Please enter valid numbers";
+        return;
     }
-}
 
-function appendCharacter(character) {
-    if (displayElement.innerText === '0') {
-        displayElement.innerText = character;
-    } else {
-        displayElement.innerText += character;
+    let result;
+    switch(op) {
+        case "+":
+            result = number01 + number02;
+            break;
+        case "-":
+            result = number01 - number02;
+            break;
+        case "*":
+            result = number01 * number02;
+            break;
+        case "/":
+            result = number02 !== 0 ? number01 / number02 : "Cannot divide by zero";
+            break;
+        default:
+            display.innerHTML = "Invalid operator";
+            return;
     }
-}
 
-function calculateResult() {
-    try {
-        displayElement.innerText = eval(displayElement.innerText);
-        animateDisplay();
-    } catch {
-        displayElement.innerText = 'Error';
-    }
+    display.innerHTML = `${number01} ${op} ${number02} = ${result}`;
 }
-
-function animateDisplay() {
-    displayElement.classList.add('animate');
-    setTimeout(() => displayElement.classList.remove('animate'), 300);
-}
-
-document.querySelectorAll('.button').forEach(button => {
-    button.addEventListener('click', () => {
-        button.classList.add('active');
-        setTimeout(() => button.classList.remove('active'), 200);
-    });
-});
