@@ -23,7 +23,20 @@ function appendCharacter(character) {
 function calculateResult() {
     try {
         displayElement.innerText = eval(displayElement.innerText);
+        animateDisplay();
     } catch {
         displayElement.innerText = 'Error';
     }
 }
+
+function animateDisplay() {
+    displayElement.classList.add('animate');
+    setTimeout(() => displayElement.classList.remove('animate'), 300);
+}
+
+document.querySelectorAll('.button').forEach(button => {
+    button.addEventListener('click', () => {
+        button.classList.add('active');
+        setTimeout(() => button.classList.remove('active'), 200);
+    });
+});
